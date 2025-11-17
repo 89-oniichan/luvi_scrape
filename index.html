@@ -857,7 +857,7 @@
         // Load stats (API mode)
         async function loadStats() {
             try {
-                const response = await fetch(`${API_BASE_URL}/stats`);
+                const response = await fetch(`${API_BASE_URL}/api/stats`);
                 const data = await response.json();
 
                 if (data.success) {
@@ -872,7 +872,7 @@
         // Load all series for the filter dropdown (API mode)
         async function loadAllSeries() {
             try {
-                const response = await fetch(`${API_BASE_URL}/stats`);
+                const response = await fetch(`${API_BASE_URL}/api/stats`);
                 const data = await response.json();
 
                 if (data.success && data.data.bySeries) {
@@ -959,7 +959,7 @@
                 );
             } else {
                 // Use API
-                const response = await fetch(`${API_BASE_URL}/search/fuzzy?name=${encodeURIComponent(name)}`);
+                const response = await fetch(`${API_BASE_URL}/api/search/fuzzy?name=${encodeURIComponent(name)}`);
 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);

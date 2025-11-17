@@ -806,10 +806,10 @@
     </div>
 
     <script>
-        // Configuration - Static JSON Mode for GitHub Pages
-        const USE_STATIC_JSON = true; // Set to true for GitHub Pages
+        // Configuration - Live API Mode for GitHub Pages
+        const USE_STATIC_JSON = false; // Set to false to use live API
         const STATIC_JSON_URL = './cards-data.json';
-        const API_BASE_URL = 'http://bot.oniisama.com:3000/api'; // Fallback
+        const API_BASE_URL = 'https://bot.oniisama.com/api'; // Live HTTPS API
 
         let allCharacters = [];
         let displayedCharacters = [];

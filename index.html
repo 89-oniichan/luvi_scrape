@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUVI - Character Lookup Tool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #2a2a3e;
+            position: relative;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, #4A9EFF, #B84AFF);
+        }
+
+        header h1 {
+            font-size: 3.5em;
+            font-weight: 300;
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #4A9EFF 0%, #B84AFF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        header p {
+            font-size: 1.1em;
+            color: #888;
+            letter-spacing: 2px;
+            font-weight: 300;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #2a2a3e;
+            border-radius: 8px;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: 300;
+            color: #4A9EFF;
+        }
+
+        .stat-label {
+            font-size: 0.85em;
+            color: #888;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        .input-section {
+            background: rgba(10, 10, 10, 0.6);
+            border: 1px solid #2a2a3e;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .input-label {
+            font-size: 1.2em;
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            display: block;
+            color: #fff;
+        }
+
+        .input-textarea {
+            width: 100%;
+            min-height: 150px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #fff;
+            padding: 18px;
+            font-family: inherit;
+            font-size: 1em;
+            resize: vertical;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .input-textarea:focus {
+            outline: none;
+            border-color: #4A9EFF;
+            box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.1);
+        }
+
+        .input-hint {
+            color: #888;
+            font-size: 0.9em;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .input-hint::before {
+            content: '💡';
+            font-size: 1.2em;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: transparent;
+            color: #fff;
+            border: 1px solid #4A9EFF;
+            border-radius: 8px;
+            padding: 15px 35px;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: 400;
+            letter-spacing: 1.5px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(74, 158, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn:hover {
+            background: #4A9EFF;
+            border-color: #4A9EFF;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 158, 255, 0.4);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4A9EFF 0%, #B84AFF 100%);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(74, 158, 255, 0.5);
+        }
+
+        .filters-section {
+            background: rgba(10, 10, 10, 0.6);
+            border: 1px solid #2a2a3e;
+            border-radius: 12px;
+            padding: 35px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .filters-section.active {
+            max-height: 500px;
+            opacity: 1;
+            margin-bottom: 40px;
+        }
+
+        .filter-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .filter-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-label {
+            font-size: 0.85em;
+            color: #aaa;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            font-weight: 400;
+        }
+
+        .filter-select {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #fff;
+            padding: 14px;
+            font-family: inherit;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #4A9EFF;
+            box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.1);
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #2a2a3e;
+        }
+
+        .results-count {
+            font-size: 1.4em;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #4A9EFF;
+        }
+
+        .sort-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .sort-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #333;
+            color: #888;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.3s ease;
+        }
+
+        .sort-btn.active {
+            background: #4A9EFF;
+            color: #fff;
+            border-color: #4A9EFF;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 80px 20px;
+            color: #888;
+            font-size: 1.2em;
+            display: none;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 3px solid #333;
+            border-top-color: #4A9EFF;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 15px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: rgba(139, 0, 0, 0.2);
+            border: 1px solid #8B0000;
+            border-radius: 8px;
+            color: #ff6666;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            display: none;
+            animation: shake 0.5s;
+        }
+
+        .error.active {
+            display: block;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .success {
+            background: rgba(0, 128, 0, 0.2);
+            border: 1px solid #008000;
+            border-radius: 8px;
+            color: #66ff66;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            display: none;
+        }
+
+        .success.active {
+            display: block;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: linear-gradient(145deg, rgba(20, 20, 30, 0.9) 0%, rgba(10, 10, 15, 0.95) 100%);
+            border: 2px solid #2a2a3e;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(74, 158, 255, 0.15) 0%, rgba(184, 74, 255, 0.15) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 1;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            border-color: #4A9EFF;
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(74, 158, 255, 0.4);
+        }
+
+        .card-image-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.8) 100%);
+            border-bottom: 2px solid #2a2a3e;
+            overflow: hidden;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card:hover .card-image {
+            transform: scale(1.1);
+        }
+
+        .badge-top-left {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 3;
+        }
+
+        .badge-top-right {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 3;
+        }
+
+        .card-content {
+            padding: 25px;
+            position: relative;
+            z-index: 2;
+            background: rgba(10, 10, 15, 0.6);
+        }
+
+        .card-title-row {
+            font-size: 1.3em;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            line-height: 1.4;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-name {
+            color: #fff;
+        }
+
+        .card-dot {
+            color: #666;
+            font-size: 0.8em;
+        }
+
+        .card-series-text {
+            color: #4A9EFF;
+            font-size: 0.85em;
+        }
+
+        .card-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .card-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 10px 16px;
+            font-size: 0.9em;
+            font-weight: 500;
+            letter-spacing: 0.8px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid currentColor;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            text-transform: uppercase;
+            font-size: 0.75em;
+        }
+
+        .card-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        .badge-overlay {
+            padding: 8px 14px;
+            font-size: 0.7em;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+        }
+
+        .badge-element {
+            color: #4AFF88;
+            background: rgba(74, 255, 136, 0.15);
+            border-color: #4AFF88;
+        }
+
+        .badge-element::before {
+            content: '⚡';
+            font-size: 1.2em;
+        }
+
+        .badge-role {
+            color: #FFB84A;
+            background: rgba(255, 184, 74, 0.15);
+            border-color: #FFB84A;
+        }
+
+        .badge-role::before {
+            content: '⚔️';
+            font-size: 1.2em;
+        }
+
+        .badge-series {
+            color: #4A9EFF;
+            background: rgba(74, 158, 255, 0.15);
+            border-color: #4A9EFF;
+        }
+
+        .badge-series::before {
+            content: '📚';
+            font-size: 1.2em;
+        }
+
+        .zoom-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.96);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            cursor: zoom-out;
+            backdrop-filter: blur(20px);
+        }
+
+        .zoom-modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .zoom-modal img {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            border-radius: 8px;
+        }
+
+        .zoom-close {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            width: 50px;
+            height: 50px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 28px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .zoom-close:hover {
+            background: #fff;
+            color: #000;
+            transform: rotate(90deg);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #4A9EFF 0%, #B84AFF 100%);
+            border: none;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 20px rgba(74, 158, 255, 0.4);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(74, 158, 255, 0.6);
+        }
+
+        .nav-links {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 2px solid #2a2a3e;
+        }
+
+        .nav-links a {
+            color: #888;
+            text-decoration: none;
+            margin: 0 25px;
+            letter-spacing: 1.5px;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #4A9EFF, #B84AFF);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.2em;
+                letter-spacing: 4px;
+            }
+
+            .input-section, .filters-section {
+                padding: 25px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-image {
+                height: 400px;
+            }
+
+            .stats-bar {
+                gap: 20px;
+            }
+
+            .stat-item {
+                flex: 1;
+                min-width: 120px;
+            }
+
+            .nav-links a {
+                display: block;
+                margin: 15px 0;
+            }
+
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Zoom Modal -->
+    <div class="zoom-modal" id="zoomModal">
+        <div class="zoom-close" id="zoomClose">×</div>
+        <img id="zoomedImage" src="" alt="Zoomed character">
+    </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop">↑</button>
+
+    <div class="container">
+        <header>
+            <h1>LUVI</h1>
+            <p>CHARACTER LOOKUP TOOL</p>
+            <div class="stats-bar" id="statsBar">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalCards">-</div>
+                    <div class="stat-label">Total Cards</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="totalSeries">-</div>
+                    <div class="stat-label">Series</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="input-section">
+            <label class="input-label">ENTER CHARACTER NAMES</label>
+            <p class="input-hint">Enter character names separated by commas or one per line</p>
+            <textarea
+                class="input-textarea"
+                id="characterInput"
+                placeholder="Example:&#10;Akame, Chelsea, Bulat&#10;or&#10;Akame&#10;Chelsea&#10;Bulat"
+            ></textarea>
+
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="lookupCharacters()">SEARCH CHARACTERS</button>
+                <button class="btn" onclick="clearResults()">CLEAR</button>
+                <button class="btn" onclick="toggleFilters()">FILTERS</button>
+            </div>
+        </div>
+
+        <div class="filters-section" id="filtersSection">
+            <div class="filter-group">
+                <div class="filter-item">
+                    <label class="filter-label">FILTER BY ROLE</label>
+                    <select class="filter-select" id="roleFilter" onchange="applyFilters()">
+                        <option value="">All Roles</option>
+                        <option value="Frontline">Frontline</option>
+                        <option value="Support">Support</option>
+                        <option value="Duelist">Duelist</option>
+                        <option value="Phantom">Phantom</option>
+                        <option value="Mastermind">Mastermind</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label class="filter-label">FILTER BY ELEMENT</label>
+                    <select class="filter-select" id="elementFilter" onchange="applyFilters()">
+                        <option value="">All Elements</option>
+                        <option value="Normal">Normal</option>
+                        <option value="Fire">Fire</option>
+                        <option value="Water">Water</option>
+                        <option value="Grass">Grass</option>
+                        <option value="Electric">Electric</option>
+                        <option value="Ice">Ice</option>
+                        <option value="Ground">Ground</option>
+                        <option value="Air">Air</option>
+                        <option value="Light">Light</option>
+                        <option value="Dark">Dark</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label class="filter-label">FILTER BY SERIES</label>
+                    <select class="filter-select" id="seriesFilter" onchange="applyFilters()">
+                        <option value="">All Series</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="error" id="errorMessage"></div>
+        <div class="success" id="successMessage"></div>
+        <div class="loading" id="loading">Searching characters</div>
+
+        <div id="resultsContainer"></div>
+
+        <div class="nav-links">
+            <a href="luvi-team-guide.html">Team Building Guide</a>
+            <a href="https://www.luvi-game.com/cards" target="_blank">Official LUVI Cards</a>
+        </div>
+    </div>
+
+    <script>
+        // Configuration - Static JSON Mode for GitHub Pages
+        const USE_STATIC_JSON = true; // Set to true for GitHub Pages
+        const STATIC_JSON_URL = './cards-data.json';
+        const API_BASE_URL = 'http://bot.oniisama.com:3000/api'; // Fallback
+
+        let allCharacters = [];
+        let displayedCharacters = [];
+        let sortOrder = 'name'; // 'name', 'role', 'element'
+        let cardsDatabase = null; // Store loaded data
+
+        // Initialize
+        async function init() {
+            if (USE_STATIC_JSON) {
+                await loadStaticData();
+            } else {
+                await loadStats();
+                await loadAllSeries();
+            }
+        }
+
+        // Load static JSON file (for GitHub Pages)
+        async function loadStaticData() {
+            try {
+                const response = await fetch(STATIC_JSON_URL);
+                cardsDatabase = await response.json();
+
+                // Display stats
+                document.getElementById('totalCards').textContent = cardsDatabase.stats.totalCards || '-';
+                document.getElementById('totalSeries').textContent = Object.keys(cardsDatabase.stats.bySeries || {}).length || '-';
+
+                // Load series dropdown
+                const seriesFilter = document.getElementById('seriesFilter');
+                const series = Object.keys(cardsDatabase.stats.bySeries || {}).sort();
+
+                series.forEach(s => {
+                    const option = document.createElement('option');
+                    option.value = s;
+                    option.textContent = s;
+                    seriesFilter.appendChild(option);
+                });
+
+                console.log(`✅ Loaded ${cardsDatabase.cards.length} cards from static JSON`);
+            } catch (error) {
+                console.error('Failed to load static data:', error);
+                showError('Unable to load card data. Please ensure cards-data.json is present.');
+            }
+        }
+
+        // Load stats (API mode)
+        async function loadStats() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/stats`);
+                const data = await response.json();
+
+                if (data.success) {
+                    document.getElementById('totalCards').textContent = data.data.totalCards || '-';
+                    document.getElementById('totalSeries').textContent = Object.keys(data.data.bySeries || {}).length || '-';
+                }
+            } catch (error) {
+                console.error('Failed to load stats:', error);
+            }
+        }
+
+        // Load all series for the filter dropdown (API mode)
+        async function loadAllSeries() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/stats`);
+                const data = await response.json();
+
+                if (data.success && data.data.bySeries) {
+                    const seriesFilter = document.getElementById('seriesFilter');
+                    const series = Object.keys(data.data.bySeries).sort();
+
+                    series.forEach(s => {
+                        const option = document.createElement('option');
+                        option.value = s;
+                        option.textContent = s;
+                        seriesFilter.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                console.error('Failed to load series:', error);
+                showError('Unable to connect to API. Please ensure the backend is running at ' + API_BASE_URL);
+            }
+        }
+
+        // Toggle filters visibility
+        function toggleFilters() {
+            const filtersSection = document.getElementById('filtersSection');
+            filtersSection.classList.toggle('active');
+        }
+
+        // Main lookup function
+        async function lookupCharacters() {
+            const input = document.getElementById('characterInput').value.trim();
+
+            if (!input) {
+                showError('Please enter at least one character name');
+                return;
+            }
+
+            // Parse input - split by comma or newline
+            const names = input.split(/[,\n]/)
+                .map(name => name.trim())
+                .filter(name => name.length > 0);
+
+            if (names.length === 0) {
+                showError('No valid character names found');
+                return;
+            }
+
+            showLoading(true);
+            hideError();
+            hideSuccess();
+
+            try {
+                // Fetch characters using fuzzy search
+                const promises = names.map(name => searchCharacter(name));
+                const results = await Promise.all(promises);
+
+                // Flatten and deduplicate results
+                const allResults = results.flat();
+                const uniqueResults = Array.from(
+                    new Map(allResults.map(card => [card.id, card])).values()
+                );
+
+                allCharacters = uniqueResults;
+                displayedCharacters = uniqueResults;
+
+                if (uniqueResults.length === 0) {
+                    showError('No characters found matching your search');
+                } else {
+                    displayResults(uniqueResults);
+                    showSuccess(`Found ${uniqueResults.length} character${uniqueResults.length !== 1 ? 's' : ''}!`);
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+                showError('Unable to connect to API. Please ensure the backend server is running.');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Search for a single character
+        async function searchCharacter(name) {
+            if (USE_STATIC_JSON && cardsDatabase) {
+                // Search in static data
+                const searchTerm = name.toLowerCase();
+                return cardsDatabase.cards.filter(card =>
+                    card.name && card.name.toLowerCase().includes(searchTerm)
+                );
+            } else {
+                // Use API
+                const response = await fetch(`${API_BASE_URL}/search/fuzzy?name=${encodeURIComponent(name)}`);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                if (data.success) {
+                    return data.data;
+                }
+                return [];
+            }
+        }
+
+        // Apply filters to displayed characters
+        function applyFilters() {
+            const roleFilter = document.getElementById('roleFilter').value;
+            const elementFilter = document.getElementById('elementFilter').value;
+            const seriesFilter = document.getElementById('seriesFilter').value;
+
+            let filtered = [...allCharacters];
+
+            if (roleFilter) {
+                filtered = filtered.filter(card => card.role === roleFilter);
+            }
+
+            if (elementFilter) {
+                filtered = filtered.filter(card => card.element === elementFilter);
+            }
+
+            if (seriesFilter) {
+                filtered = filtered.filter(card => card.series === seriesFilter);
+            }
+
+            displayedCharacters = filtered;
+            displayResults(filtered);
+        }
+
+        // Sort characters
+        function sortCharacters(order) {
+            sortOrder = order;
+            const sorted = [...displayedCharacters].sort((a, b) => {
+                if (order === 'name') return a.name.localeCompare(b.name);
+                if (order === 'role') return (a.role || '').localeCompare(b.role || '');
+                if (order === 'element') return (a.element || '').localeCompare(b.element || '');
+                return 0;
+            });
+            displayResults(sorted);
+        }
+
+        // Display results
+        function displayResults(characters) {
+            const container = document.getElementById('resultsContainer');
+
+            if (characters.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #666; padding: 60px; font-size: 1.1em;">No characters match the current filters</p>';
+                return;
+            }
+
+            const header = `
+                <div class="results-header">
+                    <div class="results-count">${characters.length} CHARACTER${characters.length !== 1 ? 'S' : ''}</div>
+                    <div class="sort-controls">
+                        <button class="sort-btn ${sortOrder === 'name' ? 'active' : ''}" onclick="sortCharacters('name')">A-Z</button>
+                        <button class="sort-btn ${sortOrder === 'role' ? 'active' : ''}" onclick="sortCharacters('role')">Role</button>
+                        <button class="sort-btn ${sortOrder === 'element' ? 'active' : ''}" onclick="sortCharacters('element')">Element</button>
+                    </div>
+                </div>
+            `;
+
+            const cards = characters.map(card => `
+                <div class="card" onclick="zoomImage('${card.image}')">
+                    <div class="card-image-container">
+                        <img
+                            src="${card.image}"
+                            alt="${card.name}"
+                            class="card-image"
+                            onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22280%22 height=%22380%22%3E%3Crect fill=%22%23050505%22 width=%22280%22 height=%22380%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%23333%22 font-size=%2218%22%3EImage Not Available%3C/text%3E%3C/svg%3E'"
+                        >
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title-row">
+                            <span class="card-name">${card.name}</span>${card.series ? ` <span class="card-dot">•</span> <span class="card-series-text">${card.series}</span>` : ''}
+                        </div>
+                        <div class="card-info">
+                            ${card.role ? `<span class="card-badge badge-role">${card.role}</span>` : ''}
+                            ${card.element ? `<span class="card-badge badge-element">${card.element}</span>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            container.innerHTML = `
+                ${header}
+                <div class="cards-grid">
+                    ${cards}
+                </div>
+            `;
+        }
+
+        // Zoom image
+        function zoomImage(src) {
+            const modal = document.getElementById('zoomModal');
+            const img = document.getElementById('zoomedImage');
+            img.src = src;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close zoom
+        document.getElementById('zoomClose').addEventListener('click', () => {
+            document.getElementById('zoomModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        document.getElementById('zoomModal').addEventListener('click', (e) => {
+            if (e.target.id === 'zoomModal') {
+                document.getElementById('zoomModal').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // ESC to close zoom
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.getElementById('zoomModal').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Back to top button
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Clear results
+        function clearResults() {
+            document.getElementById('characterInput').value = '';
+            document.getElementById('resultsContainer').innerHTML = '';
+            document.getElementById('roleFilter').value = '';
+            document.getElementById('elementFilter').value = '';
+            document.getElementById('seriesFilter').value = '';
+            allCharacters = [];
+            displayedCharacters = [];
+            hideError();
+            hideSuccess();
+        }
+
+        // Show/hide loading
+        function showLoading(show) {
+            const loading = document.getElementById('loading');
+            if (show) {
+                loading.classList.add('active');
+            } else {
+                loading.classList.remove('active');
+            }
+        }
+
+        // Show error
+        function showError(message) {
+            const error = document.getElementById('errorMessage');
+            error.textContent = message;
+            error.classList.add('active');
+            setTimeout(() => error.classList.remove('active'), 5000);
+        }
+
+        // Hide error
+        function hideError() {
+            document.getElementById('errorMessage').classList.remove('active');
+        }
+
+        // Show success
+        function showSuccess(message) {
+            const success = document.getElementById('successMessage');
+            success.textContent = message;
+            success.classList.add('active');
+            setTimeout(() => success.classList.remove('active'), 3000);
+        }
+
+        // Hide success
+        function hideSuccess() {
+            document.getElementById('successMessage').classList.remove('active');
+        }
+
+        // Initialize on load
+        init();
+    </script>
+</body>
+</html>

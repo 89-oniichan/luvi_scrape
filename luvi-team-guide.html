@@ -1,0 +1,2301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUVI - Team Building Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: #000000;
+            color: #ffffff;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 80px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #222;
+        }
+
+        header h1 {
+            font-size: 3em;
+            font-weight: 300;
+            letter-spacing: 4px;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        header p {
+            font-size: 1em;
+            color: #888;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .section {
+            margin-bottom: 100px;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            font-weight: 300;
+            margin-bottom: 50px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #222;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .section-number {
+            font-size: 0.8em;
+            color: #555;
+            font-weight: 400;
+        }
+
+        /* SVG Icons */
+        .icon-svg {
+            width: 40px;
+            height: 40px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .icon-shield { color: #4A9EFF; }
+        .icon-support { color: #4AFF88; }
+        .icon-duelist { color: #FF4A4A; }
+        .icon-phantom { color: #B84AFF; }
+        .icon-mastermind { color: #FFB84A; }
+
+        /* Role Cards */
+        .roles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .role-card {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            padding: 40px 30px;
+            transition: border-color 0.3s ease;
+        }
+
+        .role-card:hover {
+            border-color: #333;
+        }
+
+        .role-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .role-name {
+            font-size: 1.4em;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .role-subtitle {
+            font-size: 0.9em;
+            color: #666;
+            font-weight: 300;
+        }
+
+        .role-purpose {
+            color: #aaa;
+            font-size: 0.95em;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        /* Abilities */
+        .ability-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .ability-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid #111;
+            font-weight: 300;
+        }
+
+        .ability-list li:last-child {
+            border-bottom: none;
+        }
+
+        .ability-name {
+            color: #fff;
+            font-weight: 400;
+            margin-right: 10px;
+        }
+
+        .ability-desc {
+            color: #888;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+        }
+
+        th {
+            background: #050505;
+            color: #fff;
+            padding: 20px;
+            text-align: left;
+            font-weight: 400;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        td {
+            padding: 20px;
+            border-bottom: 1px solid #111;
+            color: #aaa;
+            font-weight: 300;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Element Badges */
+        .element-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            font-size: 0.85em;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            margin: 3px;
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            color: #fff;
+        }
+
+        /* Meta Cards */
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .meta-card {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            padding: 35px 30px;
+        }
+
+        .meta-card h3 {
+            font-size: 1.2em;
+            font-weight: 300;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .meta-ability {
+            color: #fff;
+            font-weight: 400;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #111;
+        }
+
+        .meta-desc {
+            color: #888;
+            font-size: 0.95em;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        /* Strategy Boxes */
+        .strategy-box {
+            background: #0a0a0a;
+            border-left: 2px solid #333;
+            padding: 20px 25px;
+            margin: 15px 0;
+            font-weight: 300;
+        }
+
+        .strategy-box strong {
+            color: #fff;
+            font-weight: 400;
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            margin-bottom: 80px;
+        }
+
+        .gallery-title {
+            font-size: 1.5em;
+            font-weight: 300;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .gallery-container {
+            position: relative;
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+
+        .gallery-carousel {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-track {
+            display: flex;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-slide {
+            min-width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .gallery-slide img {
+            max-width: 100%;
+            max-height: 500px;
+            object-fit: contain;
+        }
+
+        .gallery-placeholder {
+            width: 400px;
+            height: 500px;
+            background: #050505;
+            border: 1px solid #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-size: 0.9em;
+            text-align: center;
+            padding: 40px;
+            font-weight: 300;
+        }
+
+        .gallery-caption {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.1em;
+            color: #aaa;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .gallery-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .gallery-btn {
+            background: transparent;
+            color: #fff;
+            border: 1px solid #333;
+            padding: 12px 30px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 300;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-btn:hover {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+        }
+
+        .gallery-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .gallery-indicator {
+            width: 8px;
+            height: 8px;
+            background: #222;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-indicator.active {
+            background: #fff;
+            width: 24px;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 280px;
+            background: #0a0a0a;
+            border-right: 1px solid #1a1a1a;
+            padding: 40px 30px;
+            overflow-y: auto;
+            z-index: 1000;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .sidebar-header {
+            font-size: 1.5em;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #222;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 20px;
+        }
+
+        .sidebar-nav a {
+            color: #888;
+            text-decoration: none;
+            font-weight: 300;
+            letter-spacing: 1px;
+            display: block;
+            padding: 10px 0;
+            transition: color 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            color: #fff;
+        }
+
+        /* Menu Toggle Button */
+        .menu-toggle {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            width: 50px;
+            height: 50px;
+            background: #0a0a0a;
+            border: 1px solid #333;
+            cursor: pointer;
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle:hover {
+            border-color: #fff;
+        }
+
+        .menu-toggle span {
+            width: 24px;
+            height: 2px;
+            background: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translateY(8px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translateY(-8px);
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 50px;
+            height: 50px;
+            background: #0a0a0a;
+            border: 1px solid #333;
+            color: #fff;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        /* Image Zoom Modal */
+        .zoom-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            cursor: zoom-out;
+        }
+
+        .zoom-modal.active {
+            display: flex;
+        }
+
+        .zoom-modal img {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .zoom-close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            width: 40px;
+            height: 40px;
+            border: 1px solid #fff;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .zoom-close:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        /* Scroll Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Enhanced Gallery */
+        .gallery-slide img {
+            cursor: zoom-in;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-slide img:hover {
+            transform: scale(1.02);
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            background-color: #fff;
+            color: #000;
+            text-align: center;
+            padding: 8px 12px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.85em;
+            white-space: nowrap;
+            letter-spacing: 0.5px;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 40px 30px;
+            }
+
+            .sidebar {
+                width: 260px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 80px 20px 40px;
+            }
+
+            header {
+                margin-bottom: 60px;
+            }
+
+            header h1 {
+                font-size: 2em;
+                letter-spacing: 2px;
+            }
+
+            header p {
+                font-size: 0.9em;
+            }
+
+            .section {
+                margin-bottom: 60px;
+            }
+
+            .section-title {
+                font-size: 1.3em;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .roles-grid,
+            .meta-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .role-card {
+                padding: 30px 20px;
+            }
+
+            .meta-card {
+                padding: 25px 20px;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 15px 10px;
+            }
+
+            .gallery-container {
+                padding: 30px 20px;
+            }
+
+            .gallery-placeholder {
+                width: 100%;
+                height: 300px;
+            }
+
+            .gallery-slide img {
+                max-height: 350px;
+            }
+
+            .gallery-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .gallery-btn {
+                width: 100%;
+                padding: 15px;
+            }
+
+            .gallery-title {
+                font-size: 1.2em;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .sidebar {
+                width: 280px;
+            }
+
+            .menu-toggle {
+                top: 20px;
+                left: 20px;
+                width: 45px;
+                height: 45px;
+            }
+
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+            }
+
+            .zoom-close {
+                top: 20px;
+                right: 20px;
+                width: 35px;
+                height: 35px;
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.5em;
+            }
+
+            .section-title {
+                font-size: 1.1em;
+            }
+
+            .role-name {
+                font-size: 1.2em;
+            }
+
+            .gallery-slide img {
+                max-height: 250px;
+            }
+
+            .icon-svg {
+                width: 32px;
+                height: 32px;
+            }
+
+            .element-badge {
+                font-size: 0.8em;
+                padding: 5px 10px;
+            }
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Character Lookup Styles */
+        .input-section {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+
+        .input-label {
+            font-size: 1.2em;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .input-textarea {
+            width: 100%;
+            min-height: 150px;
+            background: #000;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 15px;
+            font-family: inherit;
+            font-size: 1em;
+            resize: vertical;
+            margin-bottom: 20px;
+        }
+
+        .input-textarea:focus {
+            outline: none;
+            border-color: #fff;
+        }
+
+        .input-hint {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: transparent;
+            color: #fff;
+            border: 1px solid #333;
+            padding: 15px 40px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 300;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+        }
+
+        .btn-primary {
+            border-color: #4A9EFF;
+            color: #4A9EFF;
+        }
+
+        .btn-primary:hover {
+            background: #4A9EFF;
+            color: #fff;
+        }
+
+        .filters-section {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            padding: 30px;
+            margin-bottom: 40px;
+            display: none;
+        }
+
+        .filters-section.active {
+            display: block;
+        }
+
+        .filter-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .filter-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-label {
+            font-size: 0.9em;
+            color: #888;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .filter-select {
+            background: #000;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 12px;
+            font-family: inherit;
+            font-size: 0.95em;
+            cursor: pointer;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #fff;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #222;
+        }
+
+        .results-count {
+            font-size: 1.2em;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .loading-message {
+            text-align: center;
+            padding: 60px;
+            color: #666;
+            font-size: 1.1em;
+            display: none;
+        }
+
+        .loading-message.active {
+            display: block;
+        }
+
+        .error-message {
+            background: #2a0000;
+            border: 1px solid #550000;
+            color: #ff6666;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .error-message.active {
+            display: block;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            transition: border-color 0.3s ease, transform 0.3s ease;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            border-color: #333;
+            transform: translateY(-5px);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 350px;
+            object-fit: contain;
+            background: #050505;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .card-image:hover {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-name {
+            font-size: 1.3em;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .card-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .card-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            font-size: 0.85em;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+        }
+
+        .badge-element { color: #4AFF88; }
+        .badge-role { color: #FFB84A; }
+        .badge-series { color: #4A9EFF; }
+
+        /* Loading Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            animation: fadeIn 0.6s ease;
+        }
+
+        /* Icon Hover Animation */
+        .icon-svg {
+            transition: all 0.3s ease;
+        }
+
+        .role-card:hover .icon-svg {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Menu Toggle Button -->
+    <div class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">NAVIGATION</div>
+        <ul class="sidebar-nav">
+            <li><a href="#roles-overview" class="nav-link">01. Roles Overview</a></li>
+            <li><a href="#abilities" class="nav-link">02. Abilities</a></li>
+            <li><a href="#elements" class="nav-link">03. Elements</a></li>
+            <li><a href="#meta-picks" class="nav-link">04. Meta Picks</a></li>
+            <li><a href="#meta-team" class="nav-link">05. Meta Team</a></li>
+            <li><a href="#recommended-elements" class="nav-link">06. Recommended Elements</a></li>
+            <li><a href="#universal-team" class="nav-link">07. Universal Team</a></li>
+            <li><a href="#counter-strategy" class="nav-link">08. Counter Strategy</a></li>
+            <li><a href="#galleries" class="nav-link">09. Character Galleries</a></li>
+            <li><a href="#character-lookup" class="nav-link">10. Character Lookup</a></li>
+        </ul>
+    </nav>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 19V5M5 12l7-7 7 7"/>
+        </svg>
+    </div>
+
+    <!-- Zoom Modal -->
+    <div class="zoom-modal" id="zoomModal">
+        <div class="zoom-close" id="zoomClose">×</div>
+        <img id="zoomedImage" src="" alt="Zoomed image">
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>LUVI</h1>
+            <p>COMPLETE TEAM BUILDING GUIDE</p>
+        </header>
+
+        <div class="content">
+            <!-- Roles Overview -->
+            <section class="section fade-in" id="roles-overview">
+                <h2 class="section-title">
+                    <span class="section-number">01</span>
+                    ROLES OVERVIEW
+                </h2>
+
+                <div class="roles-grid">
+                    <div class="role-card">
+                        <div class="role-header">
+                            <svg class="icon-svg icon-shield" viewBox="0 0 24 24">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                            <div>
+                                <div class="role-name">FRONTLINE</div>
+                                <div class="role-subtitle">Tank</div>
+                            </div>
+                        </div>
+                        <div class="role-purpose">
+                            Absorb damage, protect the team, survive early game.
+                        </div>
+                    </div>
+
+                    <div class="role-card">
+                        <div class="role-header">
+                            <svg class="icon-svg icon-support" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v12M6 12h12"/>
+                            </svg>
+                            <div>
+                                <div class="role-name">SUPPORT</div>
+                                <div class="role-subtitle">Healer / Buffer</div>
+                            </div>
+                        </div>
+                        <div class="role-purpose">
+                            Heal teammates, buff ATK/DEF, keep the team alive.
+                        </div>
+                    </div>
+
+                    <div class="role-card">
+                        <div class="role-header">
+                            <svg class="icon-svg icon-duelist" viewBox="0 0 24 24">
+                                <path d="M5 5l14 14M19 5L5 19"/>
+                            </svg>
+                            <div>
+                                <div class="role-name">DUELIST</div>
+                                <div class="role-subtitle">Sustained DPS</div>
+                            </div>
+                        </div>
+                        <div class="role-purpose">
+                            Deal consistent damage and self-heal.
+                        </div>
+                    </div>
+
+                    <div class="role-card">
+                        <div class="role-header">
+                            <svg class="icon-svg icon-phantom" viewBox="0 0 24 24">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                            </svg>
+                            <div>
+                                <div class="role-name">PHANTOM</div>
+                                <div class="role-subtitle">Dodge / Burst Assassin</div>
+                            </div>
+                        </div>
+                        <div class="role-purpose">
+                            Avoid hits and deal sudden high damage.
+                        </div>
+                    </div>
+
+                    <div class="role-card">
+                        <div class="role-header">
+                            <svg class="icon-svg icon-mastermind" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="3"/>
+                                <path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/>
+                            </svg>
+                            <div>
+                                <div class="role-name">MASTERMIND</div>
+                                <div class="role-subtitle">Debuff / Control / Execute</div>
+                            </div>
+                        </div>
+                        <div class="role-purpose">
+                            Weaken enemies and finish low-HP targets.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Abilities -->
+            <section class="section fade-in" id="abilities">
+                <h2 class="section-title">
+                    <span class="section-number">02</span>
+                    ABILITIES FOR EACH ROLE
+                </h2>
+
+                <div class="roles-grid">
+                    <div class="role-card">
+                        <div class="role-header">
+                            <svg class="icon-svg icon-shield" viewBox="0 0 24 24">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                            <div class="role-name">FRONTLINE</div>
+                        </div>
+                        <ul class="ability-list">
+                            <li>
+                                <span class="ability-name">Opening Guard</span>
+                                <span class="ability-desc">Reduces incoming damage by 15/30/45/60% for the first 2–3 turns.</span>
+                            </li>
+                            <li>
+                                <span class="ability-name">Last Stand</span>
+                                <span class="ability-desc">Once per battle, revive with 25–45% HP and reduce next hit by 50–90%.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="role-card">
+                        <div class="role-header">
+                            <svg class="icon-svg icon-support" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v12M6 12h12"/>
+                            </svg>
+                            <div class="role-name">SUPPORT</div>
+                        </div>
+                        <ul class="ability-list">
+                            <li>
+                                <span class="ability-name">Mending Light</span>
+                                <span class="ability-desc">Heal all allies for 12–23% HP every 3 turns starting from turn 3.</span>
+                            </li>
+                            <li>
+                                <span class="ability-name">War Chant</span>
+                                <span class="ability-desc">Increase team ATK by 20–60% for 2 turns on turn 1 and every 4 turns.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="role-card">
+                        <div class="role-header">
+                            <svg class="icon-svg icon-duelist" viewBox="0 0 24 24">
+                                <path d="M5 5l14 14M19 5L5 19"/>
+                            </svg>
+                            <div class="role-name">DUELIST</div>
+                        </div>
+                        <ul class="ability-list">
+                            <li>
+                                <span class="ability-name">Riposte</span>
+                                <span class="ability-desc">25–40% chance to counterattack for 50–75% ATK when hit.</span>
+                            </li>
+                            <li>
+                                <span class="ability-name">Bloodlust</span>
+                                <span class="ability-desc">Every 3 hits, heal for 80–120% of damage dealt.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="role-card">
+                        <div class="role-header">
+                            <svg class="icon-svg icon-phantom" viewBox="0 0 24 24">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                            </svg>
+                            <div class="role-name">PHANTOM</div>
+                        </div>
+                        <ul class="ability-list">
+                            <li>
+                                <span class="ability-name">Shadowstep</span>
+                                <span class="ability-desc">20–40% chance to dodge incoming attacks.</span>
+                            </li>
+                            <li>
+                                <span class="ability-name">Phantom Rebound</span>
+                                <span class="ability-desc">When HP drops below threshold, dodge next 2 hits and gain ATK for 2 turns.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="role-card">
+                        <div class="role-header">
+                            <svg class="icon-svg icon-mastermind" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="3"/>
+                                <path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/>
+                            </svg>
+                            <div class="role-name">MASTERMIND</div>
+                        </div>
+                        <ul class="ability-list">
+                            <li>
+                                <span class="ability-name">Mind Games</span>
+                                <span class="ability-desc">20–40% chance to confuse target, reducing its damage for 3 turns.</span>
+                            </li>
+                            <li>
+                                <span class="ability-name">Checkmate</span>
+                                <span class="ability-desc">Deals 2.0x–3.0x damage if target HP is below 20–30%.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Element Effectiveness -->
+            <section class="section fade-in" id="elements">
+                <h2 class="section-title">
+                    <span class="section-number">03</span>
+                    ELEMENT EFFECTIVENESS CHART
+                </h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ELEMENT</th>
+                            <th>STRONG AGAINST</th>
+                            <th>WEAK AGAINST</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="element-badge">NORMAL</span></td>
+                            <td><span class="element-badge">Ground</span></td>
+                            <td><span class="element-badge">Air</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="element-badge">GROUND</span></td>
+                            <td><span class="element-badge">Ice</span> <span class="element-badge">Electric</span></td>
+                            <td><span class="element-badge">Normal</span> <span class="element-badge">Water</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="element-badge">GRASS</span></td>
+                            <td><span class="element-badge">Water</span> <span class="element-badge">Electric</span></td>
+                            <td><span class="element-badge">Ice</span> <span class="element-badge">Fire</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="element-badge">WATER</span></td>
+                            <td><span class="element-badge">Ground</span> <span class="element-badge">Fire</span></td>
+                            <td><span class="element-badge">Grass</span> <span class="element-badge">Electric</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="element-badge">ICE</span></td>
+                            <td><span class="element-badge">Grass</span> <span class="element-badge">Air</span></td>
+                            <td><span class="element-badge">Ground</span> <span class="element-badge">Fire</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="element-badge">AIR</span></td>
+                            <td><span class="element-badge">Normal</span> <span class="element-badge">Fire</span></td>
+                            <td><span class="element-badge">Ice</span> <span class="element-badge">Electric</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="element-badge">ELECTRIC</span></td>
+                            <td><span class="element-badge">Water</span> <span class="element-badge">Air</span></td>
+                            <td><span class="element-badge">Ground</span> <span class="element-badge">Grass</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="element-badge">FIRE</span></td>
+                            <td><span class="element-badge">Grass</span> <span class="element-badge">Ice</span></td>
+                            <td><span class="element-badge">Water</span> <span class="element-badge">Air</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="element-badge">LIGHT</span></td>
+                            <td><span class="element-badge">Dark</span></td>
+                            <td><span class="element-badge">Dark</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="element-badge">DARK</span></td>
+                            <td><span class="element-badge">Light</span></td>
+                            <td><span class="element-badge">Light</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Meta Ability Picks -->
+            <section class="section fade-in" id="meta-picks">
+                <h2 class="section-title">
+                    <span class="section-number">04</span>
+                    META ABILITY PICKS
+                </h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ROLE</th>
+                            <th>BEST ABILITY</th>
+                            <th>REASON</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Frontline</td>
+                            <td>Opening Guard</td>
+                            <td>Early damage reduction = stability</td>
+                        </tr>
+                        <tr>
+                            <td>Support</td>
+                            <td>War Chant</td>
+                            <td>Team-wide ATK boost = highest value</td>
+                        </tr>
+                        <tr>
+                            <td>Duelist</td>
+                            <td>Bloodlust</td>
+                            <td>Reliable sustain in all fights</td>
+                        </tr>
+                        <tr>
+                            <td>Phantom</td>
+                            <td>Phantom Rebound</td>
+                            <td>Guaranteed dodge + burst</td>
+                        </tr>
+                        <tr>
+                            <td>Mastermind</td>
+                            <td>Checkmate</td>
+                            <td>Strongest execute finisher</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Final Meta Team -->
+            <section class="section fade-in" id="meta-team">
+                <h2 class="section-title">
+                    <span class="section-number">05</span>
+                    FINAL META ABILITY TEAM
+                </h2>
+
+                <div class="meta-grid">
+                    <div class="meta-card">
+                        <h3>
+                            <svg class="icon-svg icon-shield" viewBox="0 0 24 24">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                            FRONTLINE
+                        </h3>
+                        <div class="meta-ability">Opening Guard</div>
+                        <div class="meta-desc">Stabilizes early battle with strong damage reduction.</div>
+                    </div>
+
+                    <div class="meta-card">
+                        <h3>
+                            <svg class="icon-svg icon-support" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v12M6 12h12"/>
+                            </svg>
+                            SUPPORT
+                        </h3>
+                        <div class="meta-ability">War Chant</div>
+                        <div class="meta-desc">Huge ATK boost for the whole team every cycle.</div>
+                    </div>
+
+                    <div class="meta-card">
+                        <h3>
+                            <svg class="icon-svg icon-duelist" viewBox="0 0 24 24">
+                                <path d="M5 5l14 14M19 5L5 19"/>
+                            </svg>
+                            DUELIST
+                        </h3>
+                        <div class="meta-ability">Bloodlust</div>
+                        <div class="meta-desc">Sustained DPS with constant self-healing.</div>
+                    </div>
+
+                    <div class="meta-card">
+                        <h3>
+                            <svg class="icon-svg icon-phantom" viewBox="0 0 24 24">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                            </svg>
+                            PHANTOM
+                        </h3>
+                        <div class="meta-ability">Phantom Rebound</div>
+                        <div class="meta-desc">Late-game burst and survival through guaranteed dodges.</div>
+                    </div>
+
+                    <div class="meta-card">
+                        <h3>
+                            <svg class="icon-svg icon-mastermind" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="3"/>
+                                <path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/>
+                            </svg>
+                            MASTERMIND
+                        </h3>
+                        <div class="meta-ability">Checkmate</div>
+                        <div class="meta-desc">Finishes off enemies with massive multiplier damage.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recommended Elements -->
+            <section class="section fade-in" id="recommended-elements">
+                <h2 class="section-title">
+                    <span class="section-number">06</span>
+                    RECOMMENDED ELEMENTS FOR META TEAM
+                </h2>
+
+                <div class="roles-grid">
+                    <div class="role-card">
+                        <div class="role-header">
+                            <svg class="icon-svg icon-shield" viewBox="0 0 24 24">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                            <div>
+                                <div class="role-name">FRONTLINE</div>
+                                <div class="role-subtitle"><span class="element-badge">WATER</span></div>
+                            </div>
+                        </div>
+                        <ul class="ability-list">
+                            <li>Strong vs Ground and Fire</li>
+                            <li>Great for tanking common DPS types</li>
+                        </ul>
+                    </div>
+
+                    <div class="role-card">
+                        <div class="role-header">
+                            <svg class="icon-svg icon-support" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v12M6 12h12"/>
+                            </svg>
+                            <div>
+                                <div class="role-name">SUPPORT</div>
+                                <div class="role-subtitle"><span class="element-badge">LIGHT</span></div>
+                            </div>
+                        </div>
+                        <ul class="ability-list">
+                            <li>Neutral matchups</li>
+                            <li>Safest element for healers/buffers</li>
+                        </ul>
+                    </div>
+
+                    <div class="role-card">
+                        <div class="role-header">
+                            <svg class="icon-svg icon-duelist" viewBox="0 0 24 24">
+                                <path d="M5 5l14 14M19 5L5 19"/>
+                            </svg>
+                            <div>
+                                <div class="role-name">DUELIST</div>
+                                <div class="role-subtitle"><span class="element-badge">ELECTRIC</span></div>
+                            </div>
+                        </div>
+                        <ul class="ability-list">
+                            <li>Strong vs Water and Air</li>
+                            <li>Excellent damage coverage</li>
+                        </ul>
+                    </div>
+
+                    <div class="role-card">
+                        <div class="role-header">
+                            <svg class="icon-svg icon-phantom" viewBox="0 0 24 24">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                            </svg>
+                            <div>
+                                <div class="role-name">PHANTOM</div>
+                                <div class="role-subtitle"><span class="element-badge">AIR</span></div>
+                            </div>
+                        </div>
+                        <ul class="ability-list">
+                            <li>Strong vs Normal and Fire</li>
+                            <li>Works perfectly with dodge/burst playstyle</li>
+                        </ul>
+                    </div>
+
+                    <div class="role-card">
+                        <div class="role-header">
+                            <svg class="icon-svg icon-mastermind" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="3"/>
+                                <path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/>
+                            </svg>
+                            <div>
+                                <div class="role-name">MASTERMIND</div>
+                                <div class="role-subtitle"><span class="element-badge">DARK</span></div>
+                            </div>
+                        </div>
+                        <ul class="ability-list">
+                            <li>Strong vs Light</li>
+                            <li>Best finisher element</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Final Universal Team -->
+            <section class="section fade-in" id="universal-team">
+                <h2 class="section-title">
+                    <span class="section-number">07</span>
+                    FINAL UNIVERSAL ELEMENT TEAM
+                </h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ROLE</th>
+                            <th>ABILITY</th>
+                            <th>SUGGESTED ELEMENT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Frontline</td>
+                            <td>Opening Guard</td>
+                            <td><span class="element-badge">WATER</span></td>
+                        </tr>
+                        <tr>
+                            <td>Support</td>
+                            <td>War Chant</td>
+                            <td><span class="element-badge">LIGHT</span></td>
+                        </tr>
+                        <tr>
+                            <td>Duelist</td>
+                            <td>Bloodlust</td>
+                            <td><span class="element-badge">ELECTRIC</span></td>
+                        </tr>
+                        <tr>
+                            <td>Phantom</td>
+                            <td>Phantom Rebound</td>
+                            <td><span class="element-badge">AIR</span></td>
+                        </tr>
+                        <tr>
+                            <td>Mastermind</td>
+                            <td>Checkmate</td>
+                            <td><span class="element-badge">DARK</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Counter Strategy -->
+            <section class="section fade-in" id="counter-strategy">
+                <h2 class="section-title">
+                    <span class="section-number">08</span>
+                    COUNTER ELEMENT STRATEGY
+                </h2>
+
+                <div class="strategy-box">
+                    <strong>Strong Water enemies</strong> → pick <span class="element-badge">GRASS</span> or <span class="element-badge">ELECTRIC</span>
+                </div>
+
+                <div class="strategy-box">
+                    <strong>Strong Fire enemies</strong> → pick <span class="element-badge">WATER</span> or <span class="element-badge">AIR</span>
+                </div>
+
+                <div class="strategy-box">
+                    <strong>Strong Ground enemies</strong> → pick <span class="element-badge">WATER</span> or <span class="element-badge">NORMAL</span>
+                </div>
+
+                <div class="strategy-box">
+                    <strong>Strong Air enemies</strong> → pick <span class="element-badge">ICE</span> or <span class="element-badge">ELECTRIC</span>
+                </div>
+            </section>
+
+            <!-- Character Galleries -->
+            <section class="section fade-in" id="galleries">
+                <h2 class="section-title">
+                    <span class="section-number">09</span>
+                    CHARACTER GALLERIES
+                </h2>
+
+                <!-- Frontline Gallery -->
+                <div class="gallery-section">
+                    <h3 class="gallery-title">
+                        <svg class="icon-svg icon-shield" viewBox="0 0 24 24">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                        FRONTLINE CHARACTERS
+                    </h3>
+                    <div class="gallery-container">
+                        <div class="gallery-carousel">
+                            <div class="gallery-track" id="frontlineTrack">
+                                <div class="gallery-slide">
+                                    <div class="gallery-placeholder">
+                                        Add Frontline character images here
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gallery-caption">Frontline Tank</div>
+                        <div class="gallery-controls">
+                            <button class="gallery-btn" onclick="prevSlide('frontline')">PREVIOUS</button>
+                            <button class="gallery-btn" onclick="nextSlide('frontline')">NEXT</button>
+                        </div>
+                        <div class="gallery-indicators" id="frontlineIndicators"></div>
+                    </div>
+                </div>
+
+                <!-- Support Gallery -->
+                <div class="gallery-section">
+                    <h3 class="gallery-title">
+                        <svg class="icon-svg icon-support" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v12M6 12h12"/>
+                        </svg>
+                        SUPPORT CHARACTERS
+                    </h3>
+                    <div class="gallery-container">
+                        <div class="gallery-carousel">
+                            <div class="gallery-track" id="supportTrack">
+                                <div class="gallery-slide">
+                                    <div class="gallery-placeholder">
+                                        Add Support character images here
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gallery-caption">Support Healer</div>
+                        <div class="gallery-controls">
+                            <button class="gallery-btn" onclick="prevSlide('support')">PREVIOUS</button>
+                            <button class="gallery-btn" onclick="nextSlide('support')">NEXT</button>
+                        </div>
+                        <div class="gallery-indicators" id="supportIndicators"></div>
+                    </div>
+                </div>
+
+                <!-- Duelist Gallery -->
+                <div class="gallery-section">
+                    <h3 class="gallery-title">
+                        <svg class="icon-svg icon-duelist" viewBox="0 0 24 24">
+                            <path d="M5 5l14 14M19 5L5 19"/>
+                        </svg>
+                        DUELIST CHARACTERS
+                    </h3>
+                    <div class="gallery-container">
+                        <div class="gallery-carousel">
+                            <div class="gallery-track" id="duelistTrack">
+                                <div class="gallery-slide">
+                                    <div class="gallery-placeholder">
+                                        Add Duelist character images here
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gallery-caption">Duelist DPS</div>
+                        <div class="gallery-controls">
+                            <button class="gallery-btn" onclick="prevSlide('duelist')">PREVIOUS</button>
+                            <button class="gallery-btn" onclick="nextSlide('duelist')">NEXT</button>
+                        </div>
+                        <div class="gallery-indicators" id="duelistIndicators"></div>
+                    </div>
+                </div>
+
+                <!-- Phantom Gallery -->
+                <div class="gallery-section">
+                    <h3 class="gallery-title">
+                        <svg class="icon-svg icon-phantom" viewBox="0 0 24 24">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                        </svg>
+                        PHANTOM CHARACTERS
+                    </h3>
+                    <div class="gallery-container">
+                        <div class="gallery-carousel">
+                            <div class="gallery-track" id="phantomTrack">
+                                <div class="gallery-slide">
+                                    <div class="gallery-placeholder">
+                                        Add Phantom character images here
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gallery-caption">Phantom Assassin</div>
+                        <div class="gallery-controls">
+                            <button class="gallery-btn" onclick="prevSlide('phantom')">PREVIOUS</button>
+                            <button class="gallery-btn" onclick="nextSlide('phantom')">NEXT</button>
+                        </div>
+                        <div class="gallery-indicators" id="phantomIndicators"></div>
+                    </div>
+                </div>
+
+                <!-- Mastermind Gallery -->
+                <div class="gallery-section">
+                    <h3 class="gallery-title">
+                        <svg class="icon-svg icon-mastermind" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/>
+                        </svg>
+                        MASTERMIND CHARACTERS
+                    </h3>
+                    <div class="gallery-container">
+                        <div class="gallery-carousel">
+                            <div class="gallery-track" id="mastermindTrack">
+                                <div class="gallery-slide">
+                                    <div class="gallery-placeholder">
+                                        Add Mastermind character images here
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gallery-caption">Mastermind Controller</div>
+                        <div class="gallery-controls">
+                            <button class="gallery-btn" onclick="prevSlide('mastermind')">PREVIOUS</button>
+                            <button class="gallery-btn" onclick="nextSlide('mastermind')">NEXT</button>
+                        </div>
+                        <div class="gallery-indicators" id="mastermindIndicators"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Character Lookup Tool -->
+            <section class="section fade-in" id="character-lookup">
+                <h2 class="section-title">
+                    <span class="section-number">10</span>
+                    CHARACTER LOOKUP TOOL
+                </h2>
+
+                <div class="input-section">
+                    <label class="input-label">ENTER CHARACTER NAMES</label>
+                    <p class="input-hint">Enter character names separated by commas or one per line</p>
+                    <textarea
+                        class="input-textarea"
+                        id="characterInput"
+                        placeholder="Example:&#10;Akame, Chelsea, Bulat&#10;or&#10;Akame&#10;Chelsea&#10;Bulat"
+                    ></textarea>
+
+                    <div class="button-group">
+                        <button class="btn btn-primary" onclick="lookupCharacters()">SEARCH CHARACTERS</button>
+                        <button class="btn" onclick="clearCharacterResults()">CLEAR</button>
+                        <button class="btn" onclick="toggleCharacterFilters()">TOGGLE FILTERS</button>
+                    </div>
+                </div>
+
+                <div class="filters-section" id="characterFiltersSection">
+                    <div class="filter-group">
+                        <div class="filter-item">
+                            <label class="filter-label">FILTER BY ROLE</label>
+                            <select class="filter-select" id="characterRoleFilter" onchange="applyCharacterFilters()">
+                                <option value="">All Roles</option>
+                                <option value="Frontline">Frontline</option>
+                                <option value="Support">Support</option>
+                                <option value="Duelist">Duelist</option>
+                                <option value="Phantom">Phantom</option>
+                                <option value="Mastermind">Mastermind</option>
+                            </select>
+                        </div>
+                        <div class="filter-item">
+                            <label class="filter-label">FILTER BY ELEMENT</label>
+                            <select class="filter-select" id="characterElementFilter" onchange="applyCharacterFilters()">
+                                <option value="">All Elements</option>
+                                <option value="Normal">Normal</option>
+                                <option value="Fire">Fire</option>
+                                <option value="Water">Water</option>
+                                <option value="Grass">Grass</option>
+                                <option value="Electric">Electric</option>
+                                <option value="Ice">Ice</option>
+                                <option value="Ground">Ground</option>
+                                <option value="Air">Air</option>
+                                <option value="Light">Light</option>
+                                <option value="Dark">Dark</option>
+                            </select>
+                        </div>
+                        <div class="filter-item">
+                            <label class="filter-label">FILTER BY SERIES</label>
+                            <select class="filter-select" id="characterSeriesFilter" onchange="applyCharacterFilters()">
+                                <option value="">All Series</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="error-message" id="characterError"></div>
+                <div class="loading-message" id="characterLoading">Searching characters...</div>
+
+                <div id="characterResultsContainer"></div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Gallery Configuration - Add your images here
+        const galleries = {
+            frontline: [
+                { url: 'frontline1.jpg', caption: 'Frontline Tank Warrior' },
+                { url: 'frontline2.jpg', caption: 'Frontline Shield Guardian' },
+                { url: 'frontline3.jpg', caption: 'Frontline Defender' }
+            ],
+            support: [
+                { url: 'support1.jpg', caption: 'Support Light Healer' },
+                { url: 'support2.jpg', caption: 'Support War Chanter' },
+                { url: 'support3.jpg', caption: 'Support Medic' }
+            ],
+            duelist: [
+                { url: 'duelist1.jpg', caption: 'Duelist Blade Master' },
+                { url: 'duelist2.jpg', caption: 'Duelist Blood Warrior' },
+                { url: 'duelist3.jpg', caption: 'Duelist Combat Specialist' }
+            ],
+            phantom: [
+                { url: 'phantom1.jpg', caption: 'Phantom Shadow Assassin' },
+                { url: 'phantom2.jpg', caption: 'Phantom Burst Striker' },
+                { url: 'phantom3.jpg', caption: 'Phantom Rogue' }
+            ],
+            mastermind: [
+                { url: 'mastermind1.jpg', caption: 'Mastermind Tactician' },
+                { url: 'mastermind2.jpg', caption: 'Mastermind Execute Master' },
+                { url: 'mastermind3.jpg', caption: 'Mastermind Controller' }
+            ]
+        };
+
+        // Current slide index for each gallery
+        const currentSlides = {
+            frontline: 0,
+            support: 0,
+            duelist: 0,
+            phantom: 0,
+            mastermind: 0
+        };
+
+        // Initialize all galleries
+        function initGalleries() {
+            Object.keys(galleries).forEach(role => {
+                initGallery(role);
+            });
+        }
+
+        // Initialize a single gallery
+        function initGallery(role) {
+            const track = document.getElementById(`${role}Track`);
+            const indicatorsContainer = document.getElementById(`${role}Indicators`);
+            const images = galleries[role];
+
+            // Clear placeholder
+            track.innerHTML = '';
+
+            // Create slides
+            images.forEach((image, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'gallery-slide';
+                slide.innerHTML = `
+                    <img src="${image.url}" alt="${image.caption}" 
+                         onerror="this.parentElement.innerHTML='<div class=\\'gallery-placeholder\\'>${image.caption}<br><br>Image not found</div>'">
+                `;
+                track.appendChild(slide);
+
+                // Create indicator
+                const indicator = document.createElement('div');
+                indicator.className = 'gallery-indicator';
+                if (index === 0) indicator.classList.add('active');
+                indicator.onclick = () => goToSlide(role, index);
+                indicatorsContainer.appendChild(indicator);
+            });
+
+            // Update caption
+            updateGallery(role);
+        }
+
+        // Update gallery display
+        function updateGallery(role) {
+            const track = document.getElementById(`${role}Track`);
+            const indicators = document.querySelectorAll(`#${role}Indicators .gallery-indicator`);
+            const caption = document.querySelector(`#${role}Track`).closest('.gallery-container').querySelector('.gallery-caption');
+            const currentIndex = currentSlides[role];
+            const images = galleries[role];
+
+            // Update track position
+            const offset = -currentIndex * 100;
+            track.style.transform = `translateX(${offset}%)`;
+
+            // Update indicators
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentIndex);
+            });
+
+            // Update caption
+            if (caption && images[currentIndex]) {
+                caption.textContent = images[currentIndex].caption;
+            }
+        }
+
+        // Navigate to next slide
+        function nextSlide(role) {
+            const images = galleries[role];
+            currentSlides[role] = (currentSlides[role] + 1) % images.length;
+            updateGallery(role);
+        }
+
+        // Navigate to previous slide
+        function prevSlide(role) {
+            const images = galleries[role];
+            currentSlides[role] = (currentSlides[role] - 1 + images.length) % images.length;
+            updateGallery(role);
+        }
+
+        // Go to specific slide
+        function goToSlide(role, index) {
+            currentSlides[role] = index;
+            updateGallery(role);
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', initGalleries);
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                // Navigate previous on all visible galleries
+                Object.keys(galleries).forEach(role => {
+                    const gallery = document.getElementById(`${role}Track`);
+                    if (isElementInViewport(gallery)) {
+                        prevSlide(role);
+                    }
+                });
+            }
+            if (e.key === 'ArrowRight') {
+                // Navigate next on all visible galleries
+                Object.keys(galleries).forEach(role => {
+                    const gallery = document.getElementById(`${role}Track`);
+                    if (isElementInViewport(gallery)) {
+                        nextSlide(role);
+                    }
+                });
+            }
+        });
+
+        // Helper function to check if element is in viewport
+        function isElementInViewport(el) {
+            const rect = el.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+
+        // ========== NEW FEATURES ==========
+
+        // Sidebar Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            sidebar.classList.toggle('active');
+        });
+
+        // Close sidebar when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+                sidebar.classList.remove('active');
+                menuToggle.classList.remove('active');
+            }
+        });
+
+        // Close sidebar when clicking a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                sidebar.classList.remove('active');
+                menuToggle.classList.remove('active');
+            });
+        });
+
+        // Active navigation highlighting
+        const sections = document.querySelectorAll('.section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        function highlightNavigation() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Back to Top Button
+        const backToTop = document.getElementById('backToTop');
+
+        function toggleBackToTop() {
+            if (window.pageYOffset > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        }
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Scroll Animations
+        function revealOnScroll() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                if (elementTop < windowHeight - 100) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        // Image Zoom
+        const zoomModal = document.getElementById('zoomModal');
+        const zoomedImage = document.getElementById('zoomedImage');
+        const zoomClose = document.getElementById('zoomClose');
+
+        // Add click event to all gallery images
+        function initImageZoom() {
+            document.querySelectorAll('.gallery-slide img').forEach(img => {
+                img.addEventListener('click', (e) => {
+                    if (e.target.src && !e.target.src.includes('data:image')) {
+                        zoomedImage.src = e.target.src;
+                        zoomModal.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    }
+                });
+            });
+        }
+
+        zoomClose.addEventListener('click', () => {
+            zoomModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        zoomModal.addEventListener('click', (e) => {
+            if (e.target === zoomModal) {
+                zoomModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // ESC key to close zoom
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && zoomModal.classList.contains('active')) {
+                zoomModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Scroll Event Listeners
+        window.addEventListener('scroll', () => {
+            toggleBackToTop();
+            highlightNavigation();
+            revealOnScroll();
+        });
+
+        // Initial calls
+        document.addEventListener('DOMContentLoaded', () => {
+            revealOnScroll();
+            highlightNavigation();
+            // Re-init image zoom after galleries load
+            setTimeout(initImageZoom, 500);
+        });
+
+        // Re-initialize image zoom when navigating galleries
+        const originalNextSlide = nextSlide;
+        const originalPrevSlide = prevSlide;
+
+        nextSlide = function(role) {
+            originalNextSlide(role);
+            setTimeout(initImageZoom, 100);
+        };
+
+        prevSlide = function(role) {
+            originalPrevSlide(role);
+            setTimeout(initImageZoom, 100);
+        };
+
+        // ========== CHARACTER LOOKUP TOOL ==========
+
+        // Configuration - Update this with your Firebase API URL
+        const API_BASE_URL = 'http://bot.oniisama.com:3000/api';
+
+        let allFoundCharacters = [];
+        let displayedFoundCharacters = [];
+
+        // Load all series for the filter dropdown
+        async function loadCharacterSeries() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/stats`);
+                const data = await response.json();
+
+                if (data.success && data.data.bySeries) {
+                    const seriesFilter = document.getElementById('characterSeriesFilter');
+                    const series = Object.keys(data.data.bySeries).sort();
+
+                    // Clear existing options except first
+                    while (seriesFilter.options.length > 1) {
+                        seriesFilter.remove(1);
+                    }
+
+                    series.forEach(s => {
+                        const option = document.createElement('option');
+                        option.value = s;
+                        option.textContent = s;
+                        seriesFilter.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                console.error('Failed to load series:', error);
+            }
+        }
+
+        // Toggle filters visibility
+        function toggleCharacterFilters() {
+            const filtersSection = document.getElementById('characterFiltersSection');
+            filtersSection.classList.toggle('active');
+        }
+
+        // Main lookup function
+        async function lookupCharacters() {
+            const input = document.getElementById('characterInput').value.trim();
+
+            if (!input) {
+                showCharacterError('Please enter at least one character name');
+                return;
+            }
+
+            // Parse input - split by comma or newline
+            const names = input.split(/[,\n]/)
+                .map(name => name.trim())
+                .filter(name => name.length > 0);
+
+            if (names.length === 0) {
+                showCharacterError('No valid character names found');
+                return;
+            }
+
+            showCharacterLoading(true);
+            hideCharacterError();
+
+            // Load series for filters if not already loaded
+            await loadCharacterSeries();
+
+            try {
+                // Fetch characters using fuzzy search
+                const promises = names.map(name => searchCharacterByName(name));
+                const results = await Promise.all(promises);
+
+                // Flatten and deduplicate results
+                const allResults = results.flat();
+                const uniqueResults = Array.from(
+                    new Map(allResults.map(card => [card.id, card])).values()
+                );
+
+                allFoundCharacters = uniqueResults;
+                displayedFoundCharacters = uniqueResults;
+
+                if (uniqueResults.length === 0) {
+                    showCharacterError('No characters found');
+                } else {
+                    displayCharacterResults(uniqueResults);
+                }
+            } catch (error) {
+                showCharacterError('Failed to fetch character data: ' + error.message);
+            } finally {
+                showCharacterLoading(false);
+            }
+        }
+
+        // Search for a single character
+        async function searchCharacterByName(name) {
+            const response = await fetch(`${API_BASE_URL}/search/fuzzy?name=${encodeURIComponent(name)}`);
+            const data = await response.json();
+
+            if (data.success) {
+                return data.data;
+            }
+            return [];
+        }
+
+        // Apply filters to displayed characters
+        function applyCharacterFilters() {
+            const roleFilter = document.getElementById('characterRoleFilter').value;
+            const elementFilter = document.getElementById('characterElementFilter').value;
+            const seriesFilter = document.getElementById('characterSeriesFilter').value;
+
+            let filtered = [...allFoundCharacters];
+
+            if (roleFilter) {
+                filtered = filtered.filter(card => card.role === roleFilter);
+            }
+
+            if (elementFilter) {
+                filtered = filtered.filter(card => card.element === elementFilter);
+            }
+
+            if (seriesFilter) {
+                filtered = filtered.filter(card => card.series === seriesFilter);
+            }
+
+            displayedFoundCharacters = filtered;
+            displayCharacterResults(filtered);
+        }
+
+        // Display character results
+        function displayCharacterResults(characters) {
+            const container = document.getElementById('characterResultsContainer');
+
+            if (characters.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #666; padding: 40px;">No characters match the current filters</p>';
+                return;
+            }
+
+            const header = `
+                <div class="results-header">
+                    <div class="results-count">${characters.length} CHARACTER${characters.length !== 1 ? 'S' : ''} FOUND</div>
+                </div>
+            `;
+
+            const cards = characters.map(card => `
+                <div class="card">
+                    <img
+                        src="${card.image}"
+                        alt="${card.name}"
+                        class="card-image"
+                        onclick="zoomImage('${card.image}')"
+                        onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22280%22 height=%22350%22%3E%3Crect fill=%22%23050505%22 width=%22280%22 height=%22350%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%23333%22 font-size=%2220%22%3EImage Not Available%3C/text%3E%3C/svg%3E'"
+                    >
+                    <div class="card-content">
+                        <div class="card-name">${card.name}</div>
+                        <div class="card-info">
+                            ${card.element ? `<div><span class="card-badge badge-element">⚡ ${card.element}</span></div>` : ''}
+                            ${card.role ? `<div><span class="card-badge badge-role">⚔️ ${card.role}</span></div>` : ''}
+                            ${card.series ? `<div><span class="card-badge badge-series">📚 ${card.series}</span></div>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            container.innerHTML = `
+                ${header}
+                <div class="cards-grid">
+                    ${cards}
+                </div>
+            `;
+        }
+
+        // Zoom image (reuses existing zoom modal)
+        function zoomCharacterImage(src) {
+            zoomedImage.src = src;
+            zoomModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Clear results
+        function clearCharacterResults() {
+            document.getElementById('characterInput').value = '';
+            document.getElementById('characterResultsContainer').innerHTML = '';
+            document.getElementById('characterRoleFilter').value = '';
+            document.getElementById('characterElementFilter').value = '';
+            document.getElementById('characterSeriesFilter').value = '';
+            allFoundCharacters = [];
+            displayedFoundCharacters = [];
+            hideCharacterError();
+        }
+
+        // Show/hide loading
+        function showCharacterLoading(show) {
+            const loading = document.getElementById('characterLoading');
+            if (show) {
+                loading.classList.add('active');
+            } else {
+                loading.classList.remove('active');
+            }
+        }
+
+        // Show error
+        function showCharacterError(message) {
+            const error = document.getElementById('characterError');
+            error.textContent = message;
+            error.classList.add('active');
+        }
+
+        // Hide error
+        function hideCharacterError() {
+            document.getElementById('characterError').classList.remove('active');
+        }
+    </script>
+</body>
+</html>

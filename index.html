@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUVI - Character Lookup Tool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: #000000;
+            color: #ffffff;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #222;
+        }
+
+        header h1 {
+            font-size: 3em;
+            font-weight: 300;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1em;
+            color: #888;
+            letter-spacing: 1px;
+        }
+
+        .input-section {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+
+        .input-label {
+            font-size: 1.2em;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .input-textarea {
+            width: 100%;
+            min-height: 150px;
+            background: #000;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 15px;
+            font-family: inherit;
+            font-size: 1em;
+            resize: vertical;
+            margin-bottom: 20px;
+        }
+
+        .input-textarea:focus {
+            outline: none;
+            border-color: #fff;
+        }
+
+        .input-hint {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: transparent;
+            color: #fff;
+            border: 1px solid #333;
+            padding: 15px 40px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 300;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+        }
+
+        .btn-primary {
+            border-color: #4A9EFF;
+            color: #4A9EFF;
+        }
+
+        .btn-primary:hover {
+            background: #4A9EFF;
+            color: #fff;
+        }
+
+        .filters-section {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            padding: 30px;
+            margin-bottom: 40px;
+            display: none;
+        }
+
+        .filters-section.active {
+            display: block;
+        }
+
+        .filter-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .filter-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-label {
+            font-size: 0.9em;
+            color: #888;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .filter-select {
+            background: #000;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 12px;
+            font-family: inherit;
+            font-size: 0.95em;
+            cursor: pointer;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #fff;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #222;
+        }
+
+        .results-count {
+            font-size: 1.2em;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px;
+            color: #666;
+            font-size: 1.1em;
+            display: none;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .error {
+            background: #2a0000;
+            border: 1px solid #550000;
+            color: #ff6666;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .error.active {
+            display: block;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            transition: border-color 0.3s ease, transform 0.3s ease;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            border-color: #333;
+            transform: translateY(-5px);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 350px;
+            object-fit: contain;
+            background: #050505;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .card-image:hover {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-name {
+            font-size: 1.3em;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .card-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .card-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            font-size: 0.85em;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+        }
+
+        .badge-element { color: #4AFF88; }
+        .badge-role { color: #FFB84A; }
+        .badge-series { color: #4A9EFF; }
+
+        .zoom-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            cursor: zoom-out;
+        }
+
+        .zoom-modal.active {
+            display: flex;
+        }
+
+        .zoom-modal img {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .zoom-close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            width: 40px;
+            height: 40px;
+            border: 1px solid #fff;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .zoom-close:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        .nav-links {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 1px solid #222;
+        }
+
+        .nav-links a {
+            color: #888;
+            text-decoration: none;
+            margin: 0 20px;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .input-section, .filters-section {
+                padding: 25px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-image {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="zoom-modal" id="zoomModal">
+        <div class="zoom-close" id="zoomClose">×</div>
+        <img id="zoomedImage" src="" alt="Zoomed character">
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>LUVI</h1>
+            <p>CHARACTER LOOKUP TOOL</p>
+        </header>
+
+        <div class="input-section">
+            <label class="input-label">ENTER CHARACTER NAMES</label>
+            <p class="input-hint">Enter character names separated by commas or one per line</p>
+            <textarea
+                class="input-textarea"
+                id="characterInput"
+                placeholder="Example:&#10;Akame, Chelsea, Bulat&#10;or&#10;Akame&#10;Chelsea&#10;Bulat"
+            ></textarea>
+
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="lookupCharacters()">SEARCH CHARACTERS</button>
+                <button class="btn" onclick="clearResults()">CLEAR</button>
+                <button class="btn" onclick="toggleFilters()">TOGGLE FILTERS</button>
+            </div>
+        </div>
+
+        <div class="filters-section" id="filtersSection">
+            <div class="filter-group">
+                <div class="filter-item">
+                    <label class="filter-label">FILTER BY ROLE</label>
+                    <select class="filter-select" id="roleFilter" onchange="applyFilters()">
+                        <option value="">All Roles</option>
+                        <option value="Frontline">Frontline</option>
+                        <option value="Support">Support</option>
+                        <option value="Duelist">Duelist</option>
+                        <option value="Phantom">Phantom</option>
+                        <option value="Mastermind">Mastermind</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label class="filter-label">FILTER BY ELEMENT</label>
+                    <select class="filter-select" id="elementFilter" onchange="applyFilters()">
+                        <option value="">All Elements</option>
+                        <option value="Normal">Normal</option>
+                        <option value="Fire">Fire</option>
+                        <option value="Water">Water</option>
+                        <option value="Grass">Grass</option>
+                        <option value="Electric">Electric</option>
+                        <option value="Ice">Ice</option>
+                        <option value="Ground">Ground</option>
+                        <option value="Air">Air</option>
+                        <option value="Light">Light</option>
+                        <option value="Dark">Dark</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label class="filter-label">FILTER BY SERIES</label>
+                    <select class="filter-select" id="seriesFilter" onchange="applyFilters()">
+                        <option value="">All Series</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="error" id="errorMessage"></div>
+        <div class="loading" id="loading">Searching characters...</div>
+
+        <div id="resultsContainer"></div>
+
+        <div class="nav-links">
+            <a href="luvi-team-guide.html">Team Building Guide</a>
+            <a href="https://www.luvi-game.com/cards" target="_blank">Official LUVI Cards</a>
+        </div>
+    </div>
+
+    <script>
+        // Configuration - Update this with your Firebase API URL
+        const API_BASE_URL = 'http://bot.oniisama.com:3000/api';
+
+        let allCharacters = [];
+        let displayedCharacters = [];
+
+        // Initialize
+        async function init() {
+            await loadAllSeries();
+        }
+
+        // Load all series for the filter dropdown
+        async function loadAllSeries() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/stats`);
+                const data = await response.json();
+
+                if (data.success && data.data.bySeries) {
+                    const seriesFilter = document.getElementById('seriesFilter');
+                    const series = Object.keys(data.data.bySeries).sort();
+
+                    series.forEach(s => {
+                        const option = document.createElement('option');
+                        option.value = s;
+                        option.textContent = s;
+                        seriesFilter.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                console.error('Failed to load series:', error);
+            }
+        }
+
+        // Toggle filters visibility
+        function toggleFilters() {
+            const filtersSection = document.getElementById('filtersSection');
+            filtersSection.classList.toggle('active');
+        }
+
+        // Main lookup function
+        async function lookupCharacters() {
+            const input = document.getElementById('characterInput').value.trim();
+
+            if (!input) {
+                showError('Please enter at least one character name');
+                return;
+            }
+
+            // Parse input - split by comma or newline
+            const names = input.split(/[,\n]/)
+                .map(name => name.trim())
+                .filter(name => name.length > 0);
+
+            if (names.length === 0) {
+                showError('No valid character names found');
+                return;
+            }
+
+            showLoading(true);
+            hideError();
+
+            try {
+                // Fetch characters using fuzzy search
+                const promises = names.map(name => searchCharacter(name));
+                const results = await Promise.all(promises);
+
+                // Flatten and deduplicate results
+                const allResults = results.flat();
+                const uniqueResults = Array.from(
+                    new Map(allResults.map(card => [card.id, card])).values()
+                );
+
+                allCharacters = uniqueResults;
+                displayedCharacters = uniqueResults;
+
+                if (uniqueResults.length === 0) {
+                    showError('No characters found');
+                } else {
+                    displayResults(uniqueResults);
+                }
+            } catch (error) {
+                showError('Failed to fetch character data: ' + error.message);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Search for a single character
+        async function searchCharacter(name) {
+            const response = await fetch(`${API_BASE_URL}/search/fuzzy?name=${encodeURIComponent(name)}`);
+            const data = await response.json();
+
+            if (data.success) {
+                return data.data;
+            }
+            return [];
+        }
+
+        // Apply filters to displayed characters
+        function applyFilters() {
+            const roleFilter = document.getElementById('roleFilter').value;
+            const elementFilter = document.getElementById('elementFilter').value;
+            const seriesFilter = document.getElementById('seriesFilter').value;
+
+            let filtered = [...allCharacters];
+
+            if (roleFilter) {
+                filtered = filtered.filter(card => card.role === roleFilter);
+            }
+
+            if (elementFilter) {
+                filtered = filtered.filter(card => card.element === elementFilter);
+            }
+
+            if (seriesFilter) {
+                filtered = filtered.filter(card => card.series === seriesFilter);
+            }
+
+            displayedCharacters = filtered;
+            displayResults(filtered);
+        }
+
+        // Display results
+        function displayResults(characters) {
+            const container = document.getElementById('resultsContainer');
+
+            if (characters.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #666; padding: 40px;">No characters match the current filters</p>';
+                return;
+            }
+
+            const header = `
+                <div class="results-header">
+                    <div class="results-count">${characters.length} CHARACTER${characters.length !== 1 ? 'S' : ''} FOUND</div>
+                </div>
+            `;
+
+            const cards = characters.map(card => `
+                <div class="card">
+                    <img
+                        src="${card.image}"
+                        alt="${card.name}"
+                        class="card-image"
+                        onclick="zoomImage('${card.image}')"
+                        onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22280%22 height=%22350%22%3E%3Crect fill=%22%23050505%22 width=%22280%22 height=%22350%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%23333%22 font-size=%2220%22%3EImage Not Available%3C/text%3E%3C/svg%3E'"
+                    >
+                    <div class="card-content">
+                        <div class="card-name">${card.name}</div>
+                        <div class="card-info">
+                            ${card.element ? `<div><span class="card-badge badge-element">⚡ ${card.element}</span></div>` : ''}
+                            ${card.role ? `<div><span class="card-badge badge-role">⚔️ ${card.role}</span></div>` : ''}
+                            ${card.series ? `<div><span class="card-badge badge-series">📚 ${card.series}</span></div>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            container.innerHTML = `
+                ${header}
+                <div class="cards-grid">
+                    ${cards}
+                </div>
+            `;
+        }
+
+        // Zoom image
+        function zoomImage(src) {
+            const modal = document.getElementById('zoomModal');
+            const img = document.getElementById('zoomedImage');
+            img.src = src;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close zoom
+        document.getElementById('zoomClose').addEventListener('click', () => {
+            document.getElementById('zoomModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        document.getElementById('zoomModal').addEventListener('click', (e) => {
+            if (e.target.id === 'zoomModal') {
+                document.getElementById('zoomModal').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // ESC to close zoom
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.getElementById('zoomModal').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Clear results
+        function clearResults() {
+            document.getElementById('characterInput').value = '';
+            document.getElementById('resultsContainer').innerHTML = '';
+            document.getElementById('roleFilter').value = '';
+            document.getElementById('elementFilter').value = '';
+            document.getElementById('seriesFilter').value = '';
+            allCharacters = [];
+            displayedCharacters = [];
+            hideError();
+        }
+
+        // Show/hide loading
+        function showLoading(show) {
+            const loading = document.getElementById('loading');
+            if (show) {
+                loading.classList.add('active');
+            } else {
+                loading.classList.remove('active');
+            }
+        }
+
+        // Show error
+        function showError(message) {
+            const error = document.getElementById('errorMessage');
+            error.textContent = message;
+            error.classList.add('active');
+        }
+
+        // Hide error
+        function hideError() {
+            document.getElementById('errorMessage').classList.remove('active');
+        }
+
+        // Initialize on load
+        init();
+    </script>
+</body>
+</html>
